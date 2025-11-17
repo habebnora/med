@@ -1,5 +1,5 @@
 {
-  "name": "Medication Schedule Organizer",
+  "name": "medication-schedule-organizer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -59,5 +59,19 @@
     "build": "vite build",
     "cap:add:android": "cap add android",
     "cap:sync": "cap sync"
-  }
+  },
+  "description": "This is a code bundle for Medication Schedule Organizer. The original project is available at https://www.figma.com/design/0lA2GHGuM9gA4BmWp7zReO/Medication-Schedule-Organizer.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/habebnora/med.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/habebnora/med/issues"
+  },
+  "homepage": "https://github.com/habebnora/med#readme"
 }

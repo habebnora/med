@@ -1,34 +1,37 @@
-image: node:20
+name: Build APK
 
-stages:
-  - build
+on:
+  push:
+    branches:
+      - main
 
-cache:
-  paths:
-    - node_modules/
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
 
-before_script:
-  - apt-get update -y
-  - apt-get install -y git
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
 
-build_android:
-  stage: build
-  script:
-    # Install dependencies and build the web project
-    - npm install
-    - npm run build
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: "18"
 
-    # Install Capacitor and ensure Android platform is set up
-    - npm install @capacitor/core @capacitor/cli
-    - npx cap add android
-    - npx cap sync
+    - name: Install Bubblewrap CLI
+      run: npm install -g @bubblewrap/cli
 
-    # Build the Android APK (Debug version)
-    - cd android
-    - chmod +x ./gradlew
-    - ./gradlew assembleDebug
+    - name: Generate TWA Project
+      run: |
+        bubblewrap init --manifest=https://your-website-url.com/manifest.json
 
-  artifacts:
-    paths:
-      - android/app/build/outputs/apk/debug/app-debug.apk
-    expire_in: 1 week
+    - name: Build APK
+      run: |
+        bubblewrap build
+        ls ./build
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-apk
+        path: ./build/app-release-signed.apk
